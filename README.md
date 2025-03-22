@@ -1,10 +1,5 @@
 # Caso de Teste: Busca de Instituição por ID
 
-## Identificação
-**ID:** TC-INST-002  
-**Nome:** Busca de instituição por ID  
-**Módulo:** API de Instituições  
-
 ## Objetivo
 Verificar se conseguimos obter os detalhes de uma instituição quando fornecemos um ID válido. Queremos garantir que a API retorne todos os dados necessários no formato correto para usarmos na população do nosso banco na aws.
 
@@ -31,6 +26,54 @@ Verificar se conseguimos obter os detalhes de uma instituição quando fornecemo
 O código abaixo implementa os testes:
 
 ```python
+
+def test_get_all_institutions():
+    """Testa a listagem de todas as instituições"""
+    
+    url = f"{BASE_URL}/institutions"
+    headers = {"Authorization": f"Bearer {TOKEN}"}
+
+    # Fazendo a requisição GET
+    response = requests.get(url, headers=headers)
+
+def test_get_institution_by_id(institution_id):
+    """Testa a busca de uma instituição específica pelo ID"""
+    
+    url = f"{BASE_URL}/institutions/{institution_id}"
+    headers = {"Authorization": f"Bearer {TOKEN}"}
+
+    # Fazendo a requisição GET
+    response = requests.get(url, headers=headers)
+
+    # Validações
+    assert response.status_code == 200, f"Status code não é 200: {response.status_code}"
+    institution = response.json()
+    assert isinstance(institution, dict), "Resposta não é um objeto"
+    
+    # Validar a estrutura da instituição
+    assert 'id' in institution, "Campo 'id' não encontrado na instituição"
+    assert isinstance(institution['id'], int), "Campo 'id' não é um inteiro"
+    
+    assert 'name' in institution, "Campo 'name' não encontrado na instituição"
+    assert isinstance(institution['name'], str), "Campo 'name' não é uma string"
+    
+    # Campo opcional
+    if 'students_count' in institution:
+        assert isinstance(institution['students_count'], int), "Campo 'students_count' não é um inteiro"
+
+def test_get_institution_students(institution_id):
+    """Testa a listagem de alunos de uma instituição específica"""
+    
+    url = f"{BASE_URL}/institutions/{institution_id}/students"
+    headers = {"Authorization": f"Bearer {TOKEN}"}
+
+    # Fazendo a requisição GET
+    response = requests.get(url, headers=headers)
+
+    # Validações
+    assert response.status_code == 200, f"Status code não é 200: {response.status_code}"
+    data = response.json()
+    assert isinstance(data, list), "Resposta não é uma lista"
 
 ```
 
