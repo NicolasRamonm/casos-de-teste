@@ -84,5 +84,16 @@ def test_get_institution_students(institution_id):
 - Campo `students_count` estava presente e era um número
 - ID correspondia ao solicitado
 
+```bash
+============================================================ test session starts =============================================================
+platform win32 -- Python 3.11.9, pytest-8.3.5, pluggy-1.5.0
+rootdir: C:\Users\nnico\OneDrive\Área de Trabalho\test
+collected 3 items                                                                                                                             
+
+test.py ...                                                                                                                             [100%]
+
+============================================================= 3 passed in 10.63s =============================================================
+```
+
 ## Pós-condição
 - Nenhuma alteração no banco de dados (teste apenas consulta dados)
